@@ -2,13 +2,16 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=db123
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db123
     ports:
       - "5433:5432"
 
   app:
+    build: .
     image: my-node-app
     ports:
-      - "3000:3000"
+      - "13000:3000"
+    volumes:
+      - .:/user/src/app

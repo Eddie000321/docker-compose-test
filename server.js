@@ -9,7 +9,7 @@ app.use(express.json()); // Middleware to parse JSON request bodies
 app.get("/", async (req, res) => {
   try {
     const data = await pool.query("SELECT * FROM schools");
-    res.sendStatus(200).send({ children: data.rows });
+    res.status(200).send({ children: data.rows });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
@@ -23,7 +23,7 @@ app.post("/", async (req, res) => {
       name,
       location,
     ]);
-    res.sendStatus(200).send({ message: "Successfully added child" });
+    res.status(200).send({ message: "Successfully added child" });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
@@ -33,9 +33,9 @@ app.post("/", async (req, res) => {
 app.get("/setup", async (req, res) => {
   try {
     await pool.query(
-      "CREATE TABLE schools( id SERIAL PRIMARY KEY, name VARCHAR(100), address VARCHAR(100)"
+      "CREATE TABLE IF NOT EXISTS schools( id SERIAL PRIMARY KEY, name VARCHAR(100), address VARCHAR(100));"
     );
-    res.sendStatus(200).send({ message: "Successfully created table" });
+    res.status(200).send({ message: "Successfully created table" });
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
