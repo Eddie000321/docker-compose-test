@@ -9,8 +9,6 @@ services:
       - "5433:5432"
 
   app:
-    depends_on:
-      - db
-    build: .
+    image: my-node-app
     ports:
       - "3000:3000"
